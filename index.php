@@ -2,15 +2,14 @@
 
 // action => label
 $buttons = [
-    'reset' => 'Reset',
     'urlencode' => 'URL Encode',
     'urldecode' => 'URL Decode',
     'b64encode' => 'Base64 Encode',
     'b64decode' => 'Base64 Decode',
     'htmlencode' => 'HTML Encode',
     'htmldecode' => 'HTML Decode',
-    // 'uuencode' => 'UU Encode',
-    // 'uudecode' => 'UU Decode',
+    'uuencode' => 'UU Encode',
+    'uudecode' => 'UU Decode',
     'qprintencode' => 'Qprint Encode',
     'qprintdecode' => 'Qprint Decode',
     'hash' => 'Hash',
@@ -19,6 +18,7 @@ $buttons = [
 
 $str = $result = $_GET['str'] ?? '';
 $action = $_GET['action'] ?? '';
+$help = 'manual/en/index.php';
 
 if ($action == 'reset') {
     http_response_code(302);
@@ -27,27 +27,35 @@ if ($action == 'reset') {
 
 } elseif ($action == 'urlencode') {
     $result = urlencode($str)?: $str;
+    $help = 'urlencode';
 
 } elseif ($action == 'urldecode') {
     $result = urldecode($str)?: $str;
+    $help = 'urldecode';
 
 } elseif ($action == 'b64encode') {
     $result = base64_encode($str)?: $str;
+    $help = 'base64_encode';
 
 } elseif ($action == 'b64decode') {
     $result = base64_decode($str)?: $str;
+    $help = 'base64_decode';
 
 } elseif ($action == 'htmlencode') {
     $result = htmlentities($str, ENT_QUOTES | ENT_HTML5)?: $str;
+    $help = 'htmlentities';
 
 } elseif ($action == 'htmldecode') {
     $result = html_entity_decode($str, ENT_QUOTES | ENT_HTML5)?: $str;
+    $help = 'html_entity_decode';
 
 } elseif ($action == 'uuencode') {
     $result = convert_uuencode($str)?: $str;
+    $help = 'convert_uuencode';
 
 } elseif ($action == 'uudecode') {
     $result = convert_uudecode($str)?: $str;
+    $help = 'convert_uudecode';
 
 } elseif ($action == 'hash') {
     $result = "Algorithm        Time  Len  Hash\n";
@@ -58,15 +66,19 @@ if ($action == 'reset') {
         $result .= sprintf("%-15s %.3f  %3d  %s\n", $algo, $t2, strlen($r), $r);
     }
     $result = trim($result);
+    $help = 'hash';
 
 } elseif ($action == 'hex') {
     $result = chunk_split(bin2hex($str), 2, " ");
+    $help = 'bin2hex';
 
 } elseif ($action == 'qprintencode') {
     $result = quoted_printable_encode($str)?: $str;
+    $help = 'quoted_printable_encode';
 
 } elseif ($action == 'qprintdecode') {
     $result = quoted_printable_decode($str)?: $str;
+    $help = 'quoted_printable_decode';
 }
 
 ?><!doctype html>
@@ -81,6 +93,7 @@ if ($action == 'reset') {
         </script>
 
         <meta charset="utf-8">
+        <meta name="description" content="Encode and Decode strings from/to URL, Base64, HTML entities, UU, Quprint, hash, hex and more." />
 
         <title>Encode/Decode everything</title>
         <meta name="description" content="Encode/Decode everything, base64, url, html, charset">
@@ -91,10 +104,7 @@ if ($action == 'reset') {
         <style type="text/css">
             html, body { height: 100%; } 
             body { margin: 0; } 
-            /*form { padding: 10px; } */
-            /*textarea { width: 99%; height: 90vh; } */
             textarea.form-input { width: 100%; height: 80vh; font-family: monospace; } 
-            /*.active { font-weight: bold; }*/
             .container { padding-top: .4rem; padding-bottom: .4rem; }
         </style>
     </head>
@@ -105,6 +115,8 @@ if ($action == 'reset') {
                 <?php foreach ($buttons as $act => $label) { ?> 
                 <button type="submit" name="action" value="<?=$act?>" class="btn<?=($action == $act? ' btn-primary': '')?>"><?=$label?></button>
                 <?php } ?>
+                <a href="/" class="btn btn-link btn-error">Reset</button>
+                <a href="https://php.net/<?=$help?>" class="btn btn-link">Help</a>
             </div>
 
             <div class="container">
@@ -113,7 +125,7 @@ if ($action == 'reset') {
         </form>
 
         <div class="container text-right">
-            <small>Contact me via <a href="mailto:xergio@gmail.com">email</a> or <a href="https://twitter.com/xergio">twitter</a>.</small>
+            <small>Contact me via <a href="mailto:xergio@gmail.com">email</a> or <a href="https://twitter.com/xergio">twitter</a>. Made with pure <a href="https://php.net/">PHP</a> and <a href="https://picturepan2.github.io/spectre/">Spectre</a>. <a href="https://gitlab.com/xergio/dencode">Code</a>.</small>
         </div>
     </body>
 </html>
