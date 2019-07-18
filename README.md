@@ -1,0 +1,1 @@
+Simpler than the mechanism of a spoon.
