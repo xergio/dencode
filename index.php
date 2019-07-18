@@ -108,7 +108,7 @@ if ($action == 'reset') {
             </div>
 
             <div class="container">
-                <textarea name="str" class="form-input" placeholder="Paste an string here"><?=htmlentities($result, ENT_QUOTES | ENT_HTML5 | ENT_IGNORE)?></textarea>
+                <textarea name="str" class="form-input" placeholder="Paste a string here"><?=htmlentities($result, ENT_QUOTES | ENT_HTML5 | ENT_IGNORE)?></textarea>
             </div>
         </form>
 
