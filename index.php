@@ -65,6 +65,13 @@ if ($action == 'reset') {
         $t2 = (microtime(true) - $t1) * 1000;
         $result .= sprintf("%-15s %.3f  %3d  %s\n", $algo, $t2, strlen($r), $r);
     }
+
+    // password_hash(PASSWORD_DEFAULT)
+    $t1 = microtime(true);
+    $r = password_hash($str, PASSWORD_DEFAULT);
+    $t2 = (microtime(true) - $t1);
+    $result .= sprintf("%-15s %.3f  %3d  %s\n", 'password_hash', $t2, strlen($r), $r);
+
     $result = trim($result);
     $help = 'hash';
 
