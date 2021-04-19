@@ -135,7 +135,7 @@ if ($action == 'reset') {
         </form>
 
         <div class="container text-right">
-            <small>Contact me via <a href="mailto:xergio@gmail.com">email</a> or <a href="https://twitter.com/xergio">twitter</a>. Made with pure <a href="https://php.net/">PHP</a> and <a href="https://picturepan2.github.io/spectre/">Spectre</a>. <a href="https://sergio.am/code/dencode.xrg.es">Code</a>.</small>
+            <small>Contact me via <a href="mailto:correo@sergio.am">email</a> or <a href="https://twitter.com/xergio">twitter</a>. Made with pure <a href="https://php.net/">PHP</a> and <a href="https://picturepan2.github.io/spectre/">Spectre</a>. <a href="https://sergio.am/code/dencode.xrg.es">Code</a>.</small>
         </div>
     </body>
 </html>
