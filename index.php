@@ -16,6 +16,7 @@ $buttons = [
     'qprintdecode' => 'Qprint Decode',
     'hash' => 'Hash',
     'hex' => 'Hex',
+    'prettyjson' => 'Pretty JSON',
 ];
 
 $str = $result = $_GET['str'] ?? '';
@@ -89,6 +90,16 @@ if ($action == 'reset') {
 } elseif ($action == 'qprintdecode') {
     $result = quoted_printable_decode($str)?: $str;
     $help = 'https://www.php.net/quoted_printable_decode';
+
+} elseif ($action == 'prettyjson') {
+    $jd = json_decode($str);
+    if (JSON_ERROR_NONE !== json_last_error()) {
+        $result = 'Error: '. json_last_error_msg() ."\n\n". $str;
+    } else {
+        $result = json_encode($jd, JSON_PRETTY_PRINT | JSON_PRESERVE_ZERO_FRACTION);
+    }
+    $help = 'https://www.php.net/json';
+
 }
 
 ?><!doctype html>
