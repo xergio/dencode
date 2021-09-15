@@ -3,7 +3,7 @@ services:
   dencode-nginx:
     image: nginx:latest
     ports:
-      - "8080:80"
+      - "8085:80"
     volumes:
       - ../app:/var/www/html
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
