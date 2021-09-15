@@ -23,7 +23,7 @@ $buttons = [
 
 $str = $result = $_GET['str'] ?? '';
 $action = $_GET['action'] ?? '';
-$help = 'https://www.php.net/manual/en/index.php';
+$help = 'https://www.php.net/manual/';
 
 if ($action == 'reset') {
     http_response_code(302);
@@ -116,44 +116,38 @@ if ($action == 'reset') {
         </script>
 
         <meta charset="utf-8">
-        <meta name="description" content="Encode and Decode strings from/to URL, Base64, HTML entities, UU, Qprint, hash, hex and more." />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Encode/Decode everything</title>
-        <meta name="description" content="Encode/Decode everything, base64, url, html, charset">
+        <title>Decode/Encode everything</title>
         <meta name="author" content="Sergio Álvarez <correo@sergio.am>">
+        <meta name="description" content="Encode and Decode strings from/to URL, Base64, HTML entities, UU, Qprint, hash, hex and more." />
 
         <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon.io/apple-touch-icon.png">
         <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.io/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.io/favicon-16x16.png">
         <link rel="manifest" href="/img/favicon.io/site.webmanifest">
 
-        <!-- <link rel="stylesheet" href="https://unpkg.com/normalize.css@8.0.1/normalize.css"> -->
-        <link rel="stylesheet" href="https://unpkg.com/spectre.css@0.5.8/dist/spectre.min.css">
-        <style type="text/css">
-            html, body { height: 100%; } 
-            body { margin: 0; } 
-            textarea.form-input { width: 100%; height: 80vh; font-family: monospace; } 
-            .container { padding-top: .4rem; padding-bottom: .4rem; }
-        </style>
+        <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+        <link rel="stylesheet" href="/css/custom.css">
     </head>
 
-    <body class="bg-gray">
+    <body class="container-fluid">
         <form method="get">
-            <div class="container">
+            <header class="grid">
                 <?php foreach ($buttons as $act => $label) { ?> 
-                <button type="submit" name="action" value="<?=$act?>" class="btn<?=($action == $act? ' btn-primary': '')?>"><?=$label?></button>
+                <button type="submit" name="action" value="<?=$act?>" class="<?=($action == $act? ' contrast': '')?>"><?=$label?></button>
                 <?php } ?>
-                <a href="/" class="btn btn-link btn-error">Reset</button>
-                <a href="<?=$help?>" class="btn btn-link">Help</a>
-            </div>
+                <a href="/">Reset</a>
+                <a href="<?=$help?>">Help</a>
+            </header>
 
-            <div class="container">
-                <textarea name="str" class="form-input" placeholder="Paste a string here"><?=htmlentities($result, ENT_QUOTES | ENT_HTML5 | ENT_IGNORE)?></textarea>
-            </div>
+            <main class="grid">
+                    <textarea name="str" class="form-input" placeholder="Paste a string here"><?=htmlentities($result, ENT_QUOTES | ENT_HTML5 | ENT_IGNORE)?></textarea>
+            </main>
+
+            <footer class="grid">
+                <small>Contact me via <a href="mailto:correo@sergio.am">email</a> or <a href="https://twitter.com/xergio">twitter</a>. Made with pure <a href="https://php.net/">PHP</a> and <a href="https://picocss.com/"><strong>Pico</strong>.css</a>. <a href="https://sergio.am/code/dencode.xrg.es">Code</a>.</small>
+            </footer>
         </form>
-
-        <div class="container text-right">
-            <small>Contact me via <a href="mailto:correo@sergio.am">email</a> or <a href="https://twitter.com/xergio">twitter</a>. Made with pure <a href="https://php.net/">PHP</a> and <a href="https://picturepan2.github.io/spectre/">Spectre</a>. <a href="https://sergio.am/code/dencode.xrg.es">Code</a>.</small>
-        </div>
     </body>
 </html>
