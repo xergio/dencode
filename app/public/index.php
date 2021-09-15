@@ -1,6 +1,8 @@
 <?php
 
-require_once 'vendor/autoload.php';
+declare(strict_types=1);
+
+require_once '../vendor/autoload.php';
 
 // action => label
 $buttons = [
@@ -96,7 +98,7 @@ if ($action == 'reset') {
     if (JSON_ERROR_NONE !== json_last_error()) {
         $result = 'Error: '. json_last_error_msg() ."\n\n". $str;
     } else {
-        $result = json_encode($jd, JSON_PRETTY_PRINT | JSON_PRESERVE_ZERO_FRACTION);
+        $result = json_encode($jd, JSON_PRETTY_PRINT | JSON_PRESERVE_ZERO_FRACTION | JSON_UNESCAPED_SLASHES);
     }
     $help = 'https://www.php.net/json';
 
@@ -114,11 +116,16 @@ if ($action == 'reset') {
         </script>
 
         <meta charset="utf-8">
-        <meta name="description" content="Encode and Decode strings from/to URL, Base64, HTML entities, UU, Quprint, hash, hex and more." />
+        <meta name="description" content="Encode and Decode strings from/to URL, Base64, HTML entities, UU, Qprint, hash, hex and more." />
 
         <title>Encode/Decode everything</title>
         <meta name="description" content="Encode/Decode everything, base64, url, html, charset">
-        <meta name="author" content="Sergio Álvarez <xergio@gmail.com>">
+        <meta name="author" content="Sergio Álvarez <correo@sergio.am>">
+
+        <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon.io/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.io/favicon-16x16.png">
+        <link rel="manifest" href="/img/favicon.io/site.webmanifest">
 
         <!-- <link rel="stylesheet" href="https://unpkg.com/normalize.css@8.0.1/normalize.css"> -->
         <link rel="stylesheet" href="https://unpkg.com/spectre.css@0.5.8/dist/spectre.min.css">
