@@ -34,12 +34,12 @@ if ($action == 'reset') {
     die();
 
 } elseif ($action == 'urlencode') {
-    $result = rawurlencode($str)?: $str;
-    $help = 'https://www.php.net/rawurlencode';
+    $result = urlencode($str)?: $str;
+    $help = 'https://www.php.net/urlencode';
 
 } elseif ($action == 'urldecode') {
-    $result = rawurldecode($str)?: $str;
-    $help = 'https://www.php.net/rawurldecode';
+    $result = urldecode($str)?: $str;
+    $help = 'https://www.php.net/urldecode';
 
 } elseif ($action == 'b64encode') {
     $result = base64_encode($str)?: $str;
