@@ -19,11 +19,14 @@ $buttons = [
     'hash' => 'Hash',
     'hex' => 'Hex',
     'prettyjson' => 'Pretty JSON',
+    'serializedtojson' => 'PHP Serialized to JSON',
 ];
 
 $str = $result = $_GET['str'] ?? '';
 $action = $_GET['action'] ?? '';
+$plain = str_contains($_SERVER['HTTP_ACCEPT'], 'text/plain');
 $help = 'https://www.php.net/manual/';
+$jsonEncodeOptions = JSON_PRETTY_PRINT | JSON_PRESERVE_ZERO_FRACTION | JSON_UNESCAPED_SLASHES;
 
 if ($action == 'reset') {
     http_response_code(302);
@@ -96,25 +99,32 @@ if ($action == 'reset') {
 } elseif ($action == 'prettyjson') {
     $jd = json_decode($str);
     if (JSON_ERROR_NONE !== json_last_error()) {
-        $result = 'Error: '. json_last_error_msg() ."\n\n". $str;
+        $result = 'Input text couldn\'t be decoded: '."\n\n".json_last_error_msg();
     } else {
-        $result = json_encode($jd, JSON_PRETTY_PRINT | JSON_PRESERVE_ZERO_FRACTION | JSON_UNESCAPED_SLASHES);
+        $result = json_encode($jd, $jsonEncodeOptions);
     }
     $help = 'https://www.php.net/json';
 
+} elseif ($action == 'serializedtojson') {
+    $stdClass = preg_replace('~O:[0-9]+:"[^"]+"~', 'O:8:"stdClass"', $str);
+    $unserialized = @unserialize($stdClass);
+    if ($unserialized === false) {
+        $result = 'Input text couldn\'t be unserialized: '."\n\n".(error_get_last()['message'] ?? 'Unknown error.');
+    } else {
+        $result = json_encode($unserialized, $jsonEncodeOptions);
+    }
+    $help = 'https://www.php.net/serialize';
+
+}
+
+if ($plain) {
+    header('Content-Type: text/plain;charset=UTF-8');
+    die($result);
 }
 
 ?><!doctype html>
 <html lang="en">
     <head>
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-70198-12"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag() { dataLayer.push(arguments) }
-            gtag('js', new Date());
-            gtag('config', 'UA-70198-12');
-        </script>
-
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -127,7 +137,7 @@ if ($action == 'reset') {
         <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.io/favicon-16x16.png">
         <link rel="manifest" href="/img/favicon.io/site.webmanifest">
 
-        <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+        <link rel="stylesheet" href="/css/pico.min.css">
         <link rel="stylesheet" href="/css/custom.css">
     </head>
 
