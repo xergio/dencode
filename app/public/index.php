@@ -150,16 +150,14 @@ if ($plain) {
                     <?php } ?>
                     <a href="/" role="button" class="secondary">Reset</a>
                     <a href="<?=$help?>" role="button" class="secondary">Help</a>
+                    <hr />
+                    <p><small>Contact me via <a href="mailto:correo@sergio.am">email</a> or <a href="https://twitter.com/xergio">twitter</a>. Made with pure <a href="https://php.net/">PHP</a> and <a href="https://picocss.com/"><strong>Pico</strong>.css</a>. <a href="https://sergio.am/code/dencode.xrg.es">Source code</a>.</small></p>
                 </div>
 
                 <div>
                     <textarea name="str" class="form-input" placeholder="Paste a string here"><?=htmlentities($result, ENT_QUOTES | ENT_HTML5 | ENT_IGNORE)?></textarea>
                 </div>
             </main>
-
-            <footer>
-                <small>Contact me via <a href="mailto:correo@sergio.am">email</a> or <a href="https://twitter.com/xergio">twitter</a>. Made with pure <a href="https://php.net/">PHP</a> and <a href="https://picocss.com/"><strong>Pico</strong>.css</a>. <a href="https://sergio.am/code/dencode.xrg.es">Code</a>.</small>
-            </footer>
         </form>
     </body>
 </html>
