@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+$start_time = microtime(true);
+
 require_once '../vendor/autoload.php';
 
 // action => label
@@ -66,7 +68,7 @@ if ($action == 'reset') {
     $help = 'https://www.php.net/convert_uudecode';
 
 } elseif ($action == 'hash') {
-    $result = "Algorithm        Time  Len  Hash\n";
+    $result = "Algorithm        Time  Len  Hash\n\nhash()\n";
     foreach (hash_algos() as $algo) {
         $t1 = microtime(true);
         $r = hash($algo, $str, false);
@@ -74,11 +76,13 @@ if ($action == 'reset') {
         $result .= sprintf("%-15s %.3f  %3d  %s\n", $algo, $t2, strlen($r), $r);
     }
 
-    // password_hash(PASSWORD_DEFAULT)
-    $t1 = microtime(true);
-    $r = password_hash($str, PASSWORD_DEFAULT);
-    $t2 = (microtime(true) - $t1);
-    $result .= sprintf("%-15s %.3f  %3d  %s\n", 'password_hash', $t2, strlen($r), $r);
+    $result .= "\npassword_hash()\n";
+    foreach (password_algos() as $algo) {
+        $t1 = microtime(true);
+        $r = password_hash($str, $algo);
+        $t2 = (microtime(true) - $t1);
+        $result .= sprintf("%-15s %.3f  %3d  %s\n", $algo, $t2, strlen($r), $r);
+    }
 
     $result = trim($result);
     $help = 'https://www.php.net/hash';
@@ -151,7 +155,7 @@ if ($plain) {
                     <a href="/" role="button" class="secondary">Reset</a>
                     <a href="<?=$help?>" role="button" class="secondary">Help</a>
                     <hr />
-                    <p><small>Contact me via <a href="mailto:correo@sergio.am">email</a> or <a href="https://twitter.com/xergio">twitter</a>. Made with pure <a href="https://php.net/">PHP</a> and <a href="https://picocss.com/"><strong>Pico</strong>.css</a>. <a href="https://sergio.am/code/dencode.xrg.es">Source code</a>.</small></p>
+                    <p><small>Contact me via <a href="mailto:correo@sergio.am">email</a> or <a href="https://twitter.com/xergio">twitter</a>. Made with pure <a href="https://php.net/">PHP</a> and <a href="https://picocss.com/"><strong>Pico</strong>.css</a>. <a href="https://sergio.am/code/dencode.xrg.es">Source code</a>. <?php printf("%.6f", (microtime(true) - $start_time)); ?>s</small></p>
                 </div>
 
                 <div>
