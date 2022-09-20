@@ -21,6 +21,7 @@ $buttons = [
     'hash' => 'Hash',
     'hex' => 'Hex',
     'prettyjson' => 'Pretty JSON',
+    'prettyxml' => 'Pretty XML',
     'serializedtojson' => 'PHP Serialized to JSON',
 ];
 
@@ -108,6 +109,15 @@ if ($action == 'reset') {
         $result = json_encode($jd, $jsonEncodeOptions);
     }
     $help = 'https://www.php.net/json';
+
+} elseif ($action == 'prettyxml') {
+    $dom = new DOMDocument('1.0');
+    $dom->preserveWhiteSpace = false;
+    $dom->formatOutput = true;
+    @$dom->loadXML($str);
+
+    $result = @$dom->saveXML();
+    $help = 'https://www.php.net/DOMDocument';
 
 } elseif ($action == 'serializedtojson') {
     $stdClass = preg_replace('~O:[0-9]+:"[^"]+"~', 'O:8:"stdClass"', $str);
