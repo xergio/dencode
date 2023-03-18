@@ -1,0 +1,21 @@
+kind: pipeline
+type: docker
+name: build
+
+steps:
+  - name: build
+    image: public.ecr.aws/composer/composer:latest
+    commands:
+      - cd app
+      - composer install
+
+  - name: deploy-to-volume
+    image: public.ecr.aws/docker/library/busybox:latest
+    commands:
+      - cd app
+      - ls -la /var/www-dencode
+      - rm -rf /var/www-dencode/*
+      - cp -r . /var/www-dencode/
+
+node:
+  location: hub
