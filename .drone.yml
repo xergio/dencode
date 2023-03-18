@@ -13,7 +13,6 @@ steps:
     image: public.ecr.aws/docker/library/busybox:latest
     commands:
       - cd app
-      - ls -la /var/www-dencode
       - rm -rf /var/www-dencode/*
       - cp -r . /var/www-dencode/
 
