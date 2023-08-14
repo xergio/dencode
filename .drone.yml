@@ -4,17 +4,17 @@ name: build
 
 steps:
   - name: build
-    image: public.ecr.aws/composer/composer:latest
+    image: composer:latest
     commands:
       - cd app
       - composer install
 
   - name: deploy-to-volume
-    image: public.ecr.aws/docker/library/busybox:latest
+    image: busybox:latest
     commands:
       - cd app
       - rm -rf /var/www-dencode/*
       - cp -r . /var/www-dencode/
 
 node:
-  location: hub
+  location: nexus
