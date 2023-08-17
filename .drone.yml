@@ -13,8 +13,9 @@ steps:
     image: busybox:latest
     commands:
       - cd app
-      - rm -rf /var/www-dencode/*
-      - cp -r . /var/www-dencode/
+      - mkdir -p /var/www/dencode
+      - rm -rf /var/www/dencode/*
+      - cp -r . /var/www/dencode/
 
 node:
   location: nexus
