@@ -27,7 +27,7 @@ $buttons = [
 
 $str = $result = $_GET['str'] ?? '';
 $action = $_GET['action'] ?? '';
-$plain = str_contains($_SERVER['HTTP_ACCEPT'], 'text/plain');
+$plain = str_contains($_SERVER['HTTP_ACCEPT'] ?? '', 'text/plain');
 $help = 'https://www.php.net/manual/';
 $jsonEncodeOptions = JSON_PRETTY_PRINT | JSON_PRESERVE_ZERO_FRACTION | JSON_UNESCAPED_SLASHES;
 
