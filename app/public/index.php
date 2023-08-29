@@ -25,8 +25,8 @@ $buttons = [
     'serializedtojson' => 'PHP Serialized to JSON',
 ];
 
-$str = $result = $_GET['str'] ?? '';
-$action = $_GET['action'] ?? '';
+$str = $result = $_POST['str'] ?? $_GET['str'] ?? '';
+$action = $_POST['action'] ?? $_GET['action'] ?? '';
 $plain = str_contains($_SERVER['HTTP_ACCEPT'] ?? '', 'text/plain');
 $help = 'https://www.php.net/manual/';
 $jsonEncodeOptions = JSON_PRETTY_PRINT | JSON_PRESERVE_ZERO_FRACTION | JSON_UNESCAPED_SLASHES;
@@ -121,7 +121,7 @@ if ($action == 'reset') {
 
 } elseif ($action == 'serializedtojson') {
     $stdClass = preg_replace('~O:[0-9]+:"[^"]+"~', 'O:8:"stdClass"', $str);
-    $unserialized = @unserialize($stdClass);
+    $unserialized = unserialize($stdClass);
     if ($unserialized === false) {
         $result = 'Input text couldn\'t be unserialized: '."\n\n".(error_get_last()['message'] ?? 'Unknown error.');
     } else {
@@ -156,7 +156,7 @@ if ($plain) {
     </head>
 
     <body class="container-fluid">
-        <form method="get">
+        <form method="get" id="form" action="/">
             <main class="layout">
                 <div>
                     <?php foreach ($buttons as $act => $label) { ?> 
@@ -169,9 +169,11 @@ if ($plain) {
                 </div>
 
                 <div>
-                    <textarea name="str" class="form-input" placeholder="Paste a string here"><?=htmlentities($result, ENT_QUOTES | ENT_HTML5 | ENT_IGNORE)?></textarea>
+                    <textarea name="str" id="str" class="form-input" placeholder="Paste a string here"><?=htmlentities((string)$result, ENT_QUOTES | ENT_HTML5 | ENT_IGNORE)?></textarea>
                 </div>
             </main>
         </form>
+
+        <script src="/js/form.js"></script>
     </body>
 </html>
