@@ -7,7 +7,6 @@
     const updateFormMethod = () => {
         const maxLength = 1024;
         const textLength = textarea.value.length;
-        console.log(textLength);
 
         if (textLength > maxLength) {
             form.method = 'post';
