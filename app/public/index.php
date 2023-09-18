@@ -23,6 +23,7 @@ $buttons = [
     'prettyjson' => 'Pretty JSON',
     'prettyxml' => 'Pretty XML',
     'serializedtojson' => 'PHP Serialized to JSON',
+    'openssl_genrsa' => 'OpenSSL genrsa',
 ];
 
 $str = $result = $_POST['str'] ?? $_GET['str'] ?? '';
@@ -34,7 +35,7 @@ $jsonEncodeOptions = JSON_PRETTY_PRINT | JSON_PRESERVE_ZERO_FRACTION | JSON_UNES
 if ($action == 'reset') {
     http_response_code(302);
     header("Location: /");
-    die();
+    exit;
 
 } elseif ($action == 'urlencode') {
     $result = urlencode($str)?: $str;
@@ -129,6 +130,20 @@ if ($action == 'reset') {
     }
     $help = 'https://www.php.net/serialize';
 
+} elseif ($action == 'openssl_genrsa') {
+    $passphrase = strlen($str) > 0 ? hash('sha256', $str) : bin2hex(openssl_random_pseudo_bytes(32));
+    $options = ['private_key_bits' => 2048, 'encrypt_key' => true, 'encrypt_key_cipher' => OPENSSL_CIPHER_AES_128_CBC];
+    $key = openssl_pkey_new($options);
+    openssl_pkey_export($key, $pkey, $passphrase);
+
+    $result = "Passphrase: " . $passphrase . "\n\n" . $pkey . "\n" . openssl_pkey_get_details($key)['key'];
+
+    $help = 'https://www.php.net/openssl_pkey_new';
+
+} else {
+    $str = '';
+    $action = '';
+    $help = 'https://www.php.net/';
 }
 
 if ($plain) {
@@ -142,7 +157,7 @@ if ($plain) {
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Decode/Encode everything</title>
+        <title>Decode/Encode/Hash/Pretty/etc</title>
         <meta name="author" content="Sergio Álvarez <correo@sergio.am>">
         <meta name="description" content="Encode and Decode strings from/to URL, Base64, HTML entities, UU, Qprint, hash, hex and more." />
 
@@ -165,7 +180,7 @@ if ($plain) {
                     <a href="/" role="button" class="secondary">Reset</a>
                     <a href="<?=$help?>" role="button" class="secondary">Help</a>
                     <hr />
-                    <p><small>Contact me via <a href="mailto:correo@sergio.am">email</a> or <a href="https://twitter.com/xergio">twitter</a>. Made with pure <a href="https://php.net/">PHP</a> and <a href="https://picocss.com/"><strong>Pico</strong>.css</a>. <a href="https://sergio.am/code/dencode.xrg.es">Source code</a>. <?php printf("%.6f", (microtime(true) - $start_time)); ?>s</small></p>
+                    <p><small><a href="mailto:dencode@sergio.am">contact</a> · <a href="https://sergio.am/code/dencode.xrg.es">source code</a> · <?php printf("%.6f", (microtime(true) - $start_time)); ?>s</small></p>
                 </div>
 
                 <div>
