@@ -8,6 +8,9 @@ steps:
     commands:
       - cd app
       - composer install
+    when:
+      branch:
+        - main
 
   - name: deploy-to-volume
     image: busybox:latest
@@ -16,6 +19,9 @@ steps:
       - mkdir -p /var/www/dencode
       - rm -rf /var/www/dencode/*
       - cp -r . /var/www/dencode/
+    when:
+      branch:
+        - main
 
 node:
   location: nexus
