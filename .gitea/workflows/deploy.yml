@@ -1,0 +1,23 @@
+# https://docs.gitea.com/usage/actions/quickstart
+name: www/dencode
+
+on: [push]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+
+      - name: Deploy to volume
+        run: |
+          mkdir -p /var/www/dencode
+          rsync -av --delete --exclude '.git' --exclude '.gitea' --exclude 'vendor' ${{ gitea.workspace }}/ /var/www/dencode/
+          cd /var/www/dencode && composer install
