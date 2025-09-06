@@ -20,5 +20,5 @@ jobs:
         run: |
           apt-get update && apt-get install -y rsync
           mkdir -p /var/www/dencode
-          rsync -av --delete --exclude '.git' --exclude '.gitea' --exclude 'vendor' ${{ gitea.workspace }}/app/ /var/www/dencode/
+          rsync -rclpv --delete --exclude '.git' --exclude '.gitignore' --exclude '.gitea' --exclude 'vendor' ${{ gitea.workspace }}/app/ /var/www/dencode/
           cd /var/www/dencode && composer install
